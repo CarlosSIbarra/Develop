@@ -39,11 +39,19 @@ public class AssistantEngine {
         if (has(input, "من انت", "ما اسمك", "اسمك ايش", "عرف نفسك")) return "أنا رفيقي، مساعد صوتي عربي خفيف. أعمل داخل الهاتف دون مفتاح API وأتعلم تفضيلات بسيطة منك.";
         if (has(input, "الوقت", "الساعة", "كم الساعة")) return "الوقت الآن " + new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Calendar.getInstance().getTime()) + ".";
         if (has(input, "التاريخ", "اي يوم", "اليوم كم")) return "تاريخ اليوم هو " + new SimpleDateFormat("EEEE، d MMMM yyyy", new Locale("ar")).format(Calendar.getInstance().getTime()) + ".";
-        if (has(input, "نكتة", "اضحكني", "شيء مضحك")) return jokes[random.nextInt(jokes.length)];
+        if (has(input, "نكتة", "نكته", "نكت", "قول نكته", "قل نكته", "اضحكني", "شيء مضحك")) return jokes[random.nextInt(jokes.length)];
         if (has(input, "شكرا", "مشكور", "يعطيك العافية", "تسلم")) return "العفو، هذا واجبي. أنا موجود متى احتجتني.";
         if (has(input, "مع السلامة", "باي", "تصبح على خير", "اشوفك")) return "مع السلامة! أتمنى لك يومًا جميلًا.";
         if (has(input, "شجعني", "كلمة تحفيز", "انا تعبان", "اشعر بالحزن")) return "خذ نفسًا هادئًا، وابدأ بخطوة صغيرة. أنت قادر على التقدم.";
-        if (has(input, "احفظ ان", "تذكر ان", "لا تنس ان")) return "حسنًا، سأضع هذه المعلومة في ذاكرتي المحلية.";
+        if (has(input, "احفظ ان", "تذكر ان", "لا تنس ان")) {
+            String note = input.replaceFirst("^(احفظ ان|تذكر ان|لا تنس ان)\\s*", "").trim();
+            if (note.length() > 0) memory.edit().putString("note", note).apply();
+            return "حسنًا، حفظت هذه المعلومة في ذاكرتي المحلية.";
+        }
+        if (has(input, "ماذا حفظت", "ما الذي حفظته", "ذاكرتك")) {
+            String note = memory.getString("note", "");
+            return note.length() == 0 ? "لا توجد معلومة محفوظة حتى الآن." : "حفظت أنك قلت: " + note + ".";
+        }
         String calculation = calculate(input);
         if (calculation != null) return calculation;
         if (has(input, "كيف استخدمك", "تعليمات", "مساعدة", "الاوامر")) return "اضغط الميكروفون وتكلم حتى تنتهي، أو اكتب رسالتك. جرّب: السلام عليكم، كيف حالك، كم الساعة، ما اسمك، ماذا تستطيع، أو احسب 12 + 7.";
