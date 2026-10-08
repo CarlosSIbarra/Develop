@@ -1,0 +1,7 @@
+<resources>
+    <color name="night">#101827</color>
+    <color name="panel">#19263A</color>
+    <color name="accent">#52D6B1</color>
+    <color name="paper">#F4F7FB</color>
+    <color name="ink">#1B2738</color>
+</resources>
