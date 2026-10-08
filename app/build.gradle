@@ -1,0 +1,5 @@
+plugins { id 'com.android.application' }
+
+android { namespace 'com.sketchplay.app'; compileSdk 35
+    defaultConfig { applicationId 'com.sketchplay.app'; minSdk 27; targetSdk 35; versionCode 1; versionName '1.0' }
+}
